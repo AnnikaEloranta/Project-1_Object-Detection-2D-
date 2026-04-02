@@ -1,0 +1,7 @@
+- make folder structure 
+- labels into yolo format
+- split images and labels into mosaics (max size 640 x 640) - need to consider how overlapping etc works
+- new folder with two folder in: (images, labels). NOTE These are now with the splitter images and labels
+- take a few hundred for local testing and validation
+- train yolo-n (load a pretrained model) with the the splitted data folders
+- check using validation set AND for a subset (100-200) images draw the bounding boxes and check visually if looks alright (remember to check confidences)
