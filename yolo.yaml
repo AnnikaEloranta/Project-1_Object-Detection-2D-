@@ -1,0 +1,5 @@
+train: mosaics/images/training
+val: mosaics/images/val
+
+nc: 3
+names: ['Car', 'Pedestrian', 'Cyclist']

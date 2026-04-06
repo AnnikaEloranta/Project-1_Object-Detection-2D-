@@ -18,8 +18,9 @@ for d in [OUT_IMG_TRAIN, OUT_IMG_VAL, OUT_LBL_TRAIN, OUT_LBL_VAL]:
 all_ids = sorted([f.stem for f in Path(KITTI_LABELS).glob("*.txt")])
 random.seed(42)
 random.shuffle(all_ids)
-split = int(0.8 * len(all_ids))
-train_ids, val_ids = all_ids[:split], all_ids[split:]
+val_count = 200  # Only for internal validation so size can be very small instead of regular 80-20
+train_ids = all_ids[:-val_count]
+val_ids = all_ids[-val_count:]
 
 def convert(ids, img_out, lbl_out):
     for fid in ids:
@@ -40,6 +41,8 @@ def convert(ids, img_out, lbl_out):
             lines.append(f"{CLASS_MAP[cls]} {cx:.6f} {cy:.6f} {w:.6f} {h:.6f}")
         with open(f"{lbl_out}/{fid}.txt", "w") as f:
             f.write("\n".join(lines))
+
+print("Starting label converting")
 
 convert(train_ids, OUT_IMG_TRAIN, OUT_LBL_TRAIN)
 convert(val_ids,   OUT_IMG_VAL,   OUT_LBL_VAL)
