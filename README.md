@@ -64,9 +64,9 @@ To reproduce the results, execute the project scripts in the following order:
 **Script:** `yolo_to_kitti_format.py`
 
 * **Purpose:** Convert predictions from YOLO format to KITTI format for evaluation.
-**Inputs**
+**Inputs:**
 * **Source Directory:** `output/run_1/labels`
-**Outputs**
+**Outputs:**
 * **Target Directory:** `output/run_1/labels_kitti_format`
 
 ---
