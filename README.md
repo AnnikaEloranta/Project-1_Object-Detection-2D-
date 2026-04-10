@@ -46,7 +46,14 @@ To reproduce the results, execute the project scripts in the following order:
 * **Purpose:** Runs regular (non-KITTI script) validation and generates bounding box visualizations.
 * **Features:** Stitches the 640x640 inference tiles back into the original full-width KITTI images. Applies Non-Maximum Suppression (NMS) across the 70px overlap zones to remove duplicate detections.
 
-### 5. Evaluation
+### 5. Converting YOLO predictions to KITTI format for evaluation
+**Script:** `yolo_to_kitti_format.py`
+
+* **Purpose:** Converts predictions from the normalized YOLO format into the strict 16-column KITTI format required for official evaluation.
+* **Source Directory:** `output/run_1/labels` (Contains the raw YOLO `.txt` predictions)
+* **Target Directory:** `output/run_1/labels_kitti_format` (Contains the translated 16-column KITTI `.txt` files)
+
+### 6. Evaluation
 **Script:** `run_evaluation.py`
 
 * **Purpose:** Executes a localized KITTI evaluation protocol to benchmark model performance. It calculates official Average Precision (AP) metrics across stratified difficulty levels (Easy, Moderate, Hard)
@@ -60,12 +67,6 @@ To reproduce the results, execute the project scripts in the following order:
 * **Statistical Table:** Generates a Average Precision (AP) table in the terminal for quantitative analysis.
 * **Visual Results:** Produces three Precision-Recall (PR) curve graphs (`pr_curves_easy.png`, `pr_curves_moderate.png`, `pr_curves_hard.png`).
 `
-### 6. Converting YOLO predictions to KITTI format for evaluation
-**Script:** `yolo_to_kitti_format.py`
-
-* **Purpose:** Converts predictions from the normalized YOLO format into the strict 16-column KITTI format required for official evaluation.
-* **Source Directory:** `output/run_1/labels` (Contains the raw YOLO `.txt` predictions)
-* **Target Directory:** `output/run_1/labels_kitti_format` (Contains the translated 16-column KITTI `.txt` files)
 
 ---
 
