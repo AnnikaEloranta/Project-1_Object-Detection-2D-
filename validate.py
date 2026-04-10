@@ -11,19 +11,17 @@ import torchvision
 # Also NMS and building whole image labels for further evaluations
 # =============================================================================
 # INPUT:
-#   - data/images/train/           → 80% of images for training (~5984 images)
-#   - data/images/val/             → 20% of images for validation (~1497 images)
-#   - data/labels/train/           → converted YOLO labels for training
-#   - data/labels/val/             → converted YOLO labels for validation
+#   - final_80_20_run/weights/best.pt  → Trained YOLO model weights
+#   - mosaics/images/val/              → MAX 640x640 validation image tiles
 #
 # OUTPUT:
-#   - mosaics/images/training/     → MAX 640x640 image tiles generated from training set
-#   - mosaics/images/val/          → MAX 640x640 image tiles generated from validation set
-#   - mosaics/labels/training/     → Translated labels mapped to new tile coordinates
-#   - mosaics/labels/val/          → Translated labels mapped to new tile coordinates
+#   - output/run_{id}/labels/             → Reconstructed whole-image YOLO labels
+#   - output/run_{id}/images/             → Stitched visualization images with predicted bboxes
 #
 # LOGIC:
-#   - Horizontal tiling with 70px overlap to prevent "cutting" objects at edges. Vertical tiling unnecessary as all images are << 640px tall.
+#   - Runs the trained YOLO model on the given validation set and builds the original image back from the tiles
+#   - NMS per class applied to remove overlapping bounding boxes (yolo12n is very prone to these).
+#   - Ensures that output label format is YOLO format.
 # =============================================================================
 
 MODEL_PATH = "final_80_20_run/weights/best.pt"
