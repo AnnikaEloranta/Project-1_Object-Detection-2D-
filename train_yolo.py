@@ -26,7 +26,7 @@ def main():
         device=device,
         workers=6,
         pretrained=True, # transfer learning
-        name="kitti_mosaic_train_final",
+        name="final_80_20_run",
         half=True, # The last 3 are to make training a bit faster.
         rect=True,
         plots=False

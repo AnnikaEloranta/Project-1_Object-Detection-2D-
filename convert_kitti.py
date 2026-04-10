@@ -50,9 +50,9 @@ all_ids = sorted([f.stem for f in Path(KITTI_LABELS).glob("*.txt")])
 # Shuffle randomly
 random.seed(42)
 random.shuffle(all_ids)
-val_count = 200  # Only for internal validation so size can be very small instead of regular 80-20
-train_ids = all_ids[:-val_count]
-val_ids = all_ids[-val_count:]
+
+split = int(0.8 * len(all_ids))
+train_ids, val_ids = all_ids[:split], all_ids[split:]
 
 # --- Conversion function ---
 def convert(ids, img_out, lbl_out):
