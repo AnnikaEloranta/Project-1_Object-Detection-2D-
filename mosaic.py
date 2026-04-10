@@ -2,6 +2,26 @@ import os
 from pathlib import Path
 from PIL import Image
 
+# =============================================================================
+# Image and label splitter to max 640x640 patches
+# =============================================================================
+# INPUT:
+#   - data/images/train/           → 80% of images for training (~5984 images)
+#   - data/images/val/             → 20% of images for validation (~1497 images)
+#   - data/labels/train/           → converted YOLO labels for training
+#   - data/labels/val/             → converted YOLO labels for validation
+#
+# OUTPUT:
+#   - mosaics/images/training/     → MAX 640x640 image tiles generated from training set
+#   - mosaics/images/val/          → MAX 640x640 image tiles generated from validation set
+#   - mosaics/labels/training/     → Translated labels mapped to new tile coordinates
+#   - mosaics/labels/val/          → Translated labels mapped to new tile coordinates
+#
+# LOGIC:
+#   - Horizontal tiling with 70px overlap to prevent "cutting" objects at edges. Vertical tiling unnecessary as all images are << 640px tall.
+# =============================================================================
+
+
 OUT_IMG_TRAIN = Path("data/images/train")
 OUT_IMG_VAL   = Path("data/images/val")
 OUT_LBL_TRAIN = Path("data/labels/train")
@@ -75,6 +95,7 @@ def create_mosaics(img_folder: Path, lbl_folder: Path, out_img_folder: Path, out
                 ncy = (new_y1 + new_y2)/2 / height
                 tile_labels.append(f"{cls} {ncx:.6f} {ncy:.6f} {nw/(x1-x0):.6f} {nh/height:.6f}")
             
+            # --- Save the new images and labels ---
             out_img_name = out_img_folder / f"{fid}_m{i+1}.png"
             tile.save(out_img_name)
             
@@ -84,6 +105,7 @@ def create_mosaics(img_folder: Path, lbl_folder: Path, out_img_folder: Path, out
 
 print("Starting mosaicing.")
 
+# For both val and train sets
 create_mosaics(OUT_IMG_TRAIN, OUT_LBL_TRAIN, MOSAIC_IMG_TRAIN, MOSAIC_LBL_TRAIN)
 create_mosaics(OUT_IMG_VAL,   OUT_LBL_VAL,   MOSAIC_IMG_VAL,   MOSAIC_LBL_VAL)
 

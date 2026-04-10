@@ -14,6 +14,7 @@ from pathlib import Path
 #   - data/labels/train/           → converted YOLO labels for training
 #   - data/labels/val/             → converted YOLO labels for validation
 #   - val_ids.txt                  → list of validation image IDs (needed for KITTI evaluator)
+# =============================================================================
 
 
 

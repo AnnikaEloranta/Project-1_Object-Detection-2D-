@@ -10,7 +10,7 @@ def main():
         gpu_mem = props.total_memory // (1024 ** 3)
 
     batch_size = max(1, min(32, gpu_mem * 4))
-    print(f"Using device {device}, total GPU memory: {gpu_mem}GB → batch size: {batch_size}")
+    print(f"Using device {device}, total GPU memory: {gpu_mem}GB ==> batch size: {batch_size}")
 
     # ----------------------- ACTUAL TRAINING --------------------------------
 
