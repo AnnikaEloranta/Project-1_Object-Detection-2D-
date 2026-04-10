@@ -41,7 +41,6 @@ def main():
 
     print(f"Evaluating {len(val_image_ids)} images...")
     
-    # We now catch BOTH the text result and our newly liberated metrics dictionary!
     result = get_official_eval_result(gt_annos, dt_annos, [0, 1, 2])
     
     if isinstance(result, tuple):
