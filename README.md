@@ -80,12 +80,12 @@ Below are sample visualizations of the detection system. These images represent 
 
 | Sample Detections |
 | :---: |
-| ![Result 000003](output/run_2/images/000003.jpg) |
-| ![Result 000004](output/run_2/images/000004.jpg) |
-| ![Result 000009](output/run_2/images/000009.jpg) |
-| ![Result 000013](output/run_2/images/000013.jpg) |
-| ![Result 000017](output/run_2/images/000017.jpg) |
-| ![Result 000021](output/run_2/images/000021.jpg) |
-| ![Result 000026](output/run_2/images/000026.jpg) |
+| ![Result 000003](results/000003.jpg) |
+| ![Result 000004](results/000004.jpg) |
+| ![Result 000009](results/000009.jpg) |
+| ![Result 000013](results/000013.jpg) |
+| ![Result 000017](results/000017.jpg) |
+| ![Result 000021](results/000021.jpg) |
+| ![Result 000026](results/000026.jpg) |
 
 ---
