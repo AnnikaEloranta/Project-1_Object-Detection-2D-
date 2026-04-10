@@ -49,8 +49,8 @@ To reproduce the results, execute the project scripts in the following order:
 ### 5. Evaluation
 **Script:** `run_evaluation.py`
 
-* **Purpose:** * Executes a localized KITTI evaluation protocol to benchmark model performance. It calculates official Average Precision (AP) metrics across stratified difficulty levels (Easy, Moderate, Hard)
-* **Features:** * Computes Average Precision (AP) for three classes (**Car**, **Pedestrian**, **Cyclist**) using the 41-point interpolated precision method. Automatically categorizes performance into **Easy**, **Moderate**, and **Hard** levels based on object height, occlusion levels, and truncation levels defined by the KITTI benchmark.
+* **Purpose:** Executes a localized KITTI evaluation protocol to benchmark model performance. It calculates official Average Precision (AP) metrics across stratified difficulty levels (Easy, Moderate, Hard)
+* **Features:** Computes Average Precision (AP) for three classes (**Car**, **Pedestrian**, **Cyclist**) using the 41-point interpolated precision method. Automatically categorizes performance into **Easy**, **Moderate**, and **Hard** levels based on object height, occlusion levels, and truncation levels defined by the KITTI benchmark.
 
 **Inputs:**
 * **Ground Truth:** data/raw/training/label_2` (Original KITTI labels).
