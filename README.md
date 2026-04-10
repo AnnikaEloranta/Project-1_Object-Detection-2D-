@@ -53,12 +53,12 @@ To reproduce the results, execute the project scripts in the following order:
 * **Features:** * Computes Average Precision (AP) for three classes (**Car**, **Pedestrian**, **Cyclist**) using the 41-point interpolated precision method. Automatically categorizes performance into **Easy**, **Moderate**, and **Hard** levels based on object height, occlusion levels, and truncation levels defined by the KITTI benchmark.
 
 **Inputs:**
-* **Ground Truth:** * `data/raw/training/label_2` (Original KITTI labels).
-* **Predictions:** *`output/run_1/labels_kitti_format` (Model output converted to 16-column KITTI schema).
+* **Ground Truth:** data/raw/training/label_2` (Original KITTI labels).
+* **Predictions:** output/run_1/labels_kitti_format` (Model output converted to 16-column KITTI schema).
 
 **Outputs:**
-* **Statistical Table:** * Generates a detailed AP table in the terminal for quantitative analysis.
-* **Visual Results:** * Produces three Precision-Recall (PR) curve graphs (`pr_curves_easy.png`, `pr_curves_moderate.png`, `pr_curves_hard.png`) for inclusion in the final technical report.
+* **Statistical Table:** Generates a detailed AP table in the terminal for quantitative analysis.
+* **Visual Results:** Produces three Precision-Recall (PR) curve graphs (`pr_curves_easy.png`, `pr_curves_moderate.png`, `pr_curves_hard.png`) for inclusion in the final technical report.
 
 ---
 
