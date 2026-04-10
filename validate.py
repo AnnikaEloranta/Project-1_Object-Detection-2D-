@@ -148,8 +148,8 @@ def main():
         with open(label_path, "w") as f:
             if len(final_boxes) > 0:
                 yolo_boxes = xyxy_to_yolo(final_boxes, full_w, full_h)
-                for cls, box in zip(final_classes, yolo_boxes):
-                    f.write(f"{int(cls)} {box[0]:.6f} {box[1]:.6f} {box[2]:.6f} {box[3]:.6f}\n")
+                for cls, box, score in zip(final_classes, yolo_boxes, final_scores):
+                    f.write(f"{int(cls)} {box[0]:.6f} {box[1]:.6f} {box[2]:.6f} {box[3]:.6f} {float(score):.6f}\n")
         
         # --------------- Optional visualization based on our VIS_COUNT ---------------
         if vis_counter < VIS_COUNT:
