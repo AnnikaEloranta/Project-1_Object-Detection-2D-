@@ -63,10 +63,8 @@ To reproduce the results, execute the project scripts in the following order:
 ### 6. Converting YOLO predictions to KITTI format for evaluation
 **Script:** `yolo_to_kitti_format.py`
 
-***Purpose:** Converts predictions from the normalized YOLO format into the strict 16-column KITTI format required for official evaluation.
-**Inputs:**
+* **Purpose:** Converts predictions from the normalized YOLO format into the strict 16-column KITTI format required for official evaluation.
 * **Source Directory:** `output/run_1/labels` (Contains the raw YOLO `.txt` predictions)
-**Outputs:**
 * **Target Directory:** `output/run_1/labels_kitti_format` (Contains the translated 16-column KITTI `.txt` files)
 
 ---
