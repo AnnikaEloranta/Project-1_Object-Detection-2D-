@@ -59,15 +59,18 @@ To reproduce the results, execute the project scripts in the following order:
 **Outputs:**
 * **Statistical Table:** Generates a Average Precision (AP) table in the terminal for quantitative analysis.
 * **Visual Results:** Produces three Precision-Recall (PR) curve graphs (`pr_curves_easy.png`, `pr_curves_moderate.png`, `pr_curves_hard.png`).
-
+`
 ### 6. Converting YOLO predictions to KITTI format for evaluation
+
 **Script:** `yolo_to_kitti_format.py`
 
-* **Purpose:** Convert predictions from YOLO format to KITTI format for evaluation.
+**Purpose:** Converts predictions from the normalized YOLO format into the strict 16-column KITTI format required for official evaluation.
+
 **Inputs:**
-* **Source Directory:** `output/run_1/labels`
+* **Source Directory:** `output/run_1/labels` (Contains the raw YOLO `.txt` predictions)
+
 **Outputs:**
-* **Target Directory:** `output/run_1/labels_kitti_format`
+* **Target Directory:** `output/run_1/labels_kitti_format` (Contains the translated 16-column KITTI `.txt` files)
 
 ---
 
