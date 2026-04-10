@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 os.environ["NUMBA_ENABLE_CUDASIM"] = "1"
 
-# --- PATH FIX ---
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
 sys.path.insert(0, root_dir)
@@ -18,14 +17,20 @@ except ModuleNotFoundError as e:
     sys.exit(1)
 
 # --- PATHS ---
-GROUND_TRUTH_DIR = "data_object_label_2/training/label_2"
+GROUND_TRUTH_DIR = "data/raw/training/label_2"
 PREDICTIONS_DIR = "output/run_1/labels_kitti_format" 
 
 def main():
     print("Loading Ground Truth and Predictions...")
     
-    val_files = glob.glob(os.path.join(PREDICTIONS_DIR, "*.txt"))
-    val_image_ids = [int(os.path.splitext(os.path.basename(f))[0]) for f in val_files]
+    #val_files = glob.glob(os.path.join(PREDICTIONS_DIR, "*.txt"))
+    #val_image_ids = [int(os.path.splitext(os.path.basename(f))[0]) for f in val_files]
+
+    with open("val_ids.txt", "r") as f:
+        val_image_ids = [int(line.strip()) for line in f if line.strip()]
+    
+    #val_image_ids = val_image_ids[:100] 
+    print(f"TEST RUN: Evaluating only {len(val_image_ids)} images...")
     
     if len(val_image_ids) == 0:
         print(f"Error: No prediction files found in {PREDICTIONS_DIR}")
@@ -49,40 +54,45 @@ def main():
     print("\n================ KITTI EVALUATION RESULTS ================\n")
     print(eval_results)
 
-    # --- PLOTTING PRECISION-RECALL CURVES ---
+    # --- PLOTTING SECTION:  ---
     try:
         classes = ["Car", "Pedestrian", "Cyclist"]
-        plt.figure(figsize=(10, 6))
-        plotted = False
+        difficulty_names = ["Easy", "Moderate", "Hard"]
+        
+        # Create the 41 points for the X-axis (0.0 to 1.0)
+        recall_points = [j / 40.0 for j in range(41)]
 
-        for i, cls_name in enumerate(classes):
-            try:
-                # We extract: [Class Index, Moderate Diff (1), Main Overlap (0), All 41 Points]
-                precision_data = pr_data_dict["bbox"]["precision"][i, 1, 0, :]
+        for d_idx, d_name in enumerate(difficulty_names):
+            plt.figure(figsize=(10, 6))
+            plotted_in_this_diff = False
+
+            for i, cls_name in enumerate(classes):
+                try:
+                    # i = class, d_idx = difficulty (0,1,2), 0 = bbox overlap type
+                    precision_data = pr_data_dict["bbox"]["precision"][i, d_idx, 0, :]
+                    
+                    # Only plot if there is actual data (not all zeros or NaNs)
+                    if not all(v == 0 for v in precision_data):
+                        plt.plot(recall_points, precision_data, label=f'{cls_name}')
+                        plotted_in_this_diff = True
+                except Exception as e:
+                    print(f"Could not plot {cls_name} for {d_name}: {e}")
+                    continue
+
+            if plotted_in_this_diff:
+                plt.title(f'KITTI 2D Object Detection - PR Curves ({d_name})')
+                plt.xlabel('Recall')
+                plt.ylabel('Precision')
+                plt.xlim([0.0, 1.0])
+                plt.ylim([0.0, 1.05])
+                plt.legend(loc='lower left')
+                plt.grid(True)
                 
-                # Create the 41 points for the X-axis (0.0 to 1.0)
-                recall_points = [j / 40.0 for j in range(41)]
-                
-                plt.plot(recall_points, precision_data, label=f'{cls_name} (Moderate)')
-                plotted = True
-
-            except Exception as e:
-                print(f"Could not plot {cls_name}: {e}")
-                continue
-
-        if plotted:
-            plt.title('KITTI 2D Object Detection - Precision-Recall Curves (Moderate)')
-            plt.xlabel('Recall')
-            plt.ylabel('Precision')
-            plt.xlim([0.0, 1.0])
-            plt.ylim([0.0, 1.05])
-            plt.legend(loc='lower left')
-            plt.grid(True)
-            plt.savefig('pr_curves.png')
-            print("\nSUCCESS: PR curves saved as pr_curves.png")
+                filename = f'pr_curves_{d_name.lower()}.png'
+                plt.savefig(filename)
+                print(f"SUCCESS: {d_name} curve saved as {filename}")
             
-        else:
-            print("\nFailed to plot PR curves.")
+            plt.close()
 
     except Exception as e:
         print(f"Plotting failed: {e}")
